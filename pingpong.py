@@ -1,5 +1,6 @@
-import pygame
+import os
 import sys
+import pygame
 
 pygame.init()
 
@@ -8,12 +9,19 @@ screen = pygame.display.set_mode((screen_x, screen_y))
 
 pygame.display.set_caption("Ping-Pong")
 
+# Music effects
+intro_sound = pygame.mixer.Sound("audio/intro.wav")
+intro_sound.set_volume(0.7)
+intro_sound.play()
+hit_sound = pygame.mixer.Sound("audio/hit.wav")
+
 # Initial screen
-font_title = pygame.font.Font("font/Pixeltype.ttf", 60)
-font_intro = pygame.font.Font("font/Pixeltype.ttf", 30)
+font_path = 'font/Pixeltype.ttf'
+font_title = pygame.font.Font(font_path, 60)
+font_intro = pygame.font.Font(font_path, 30)
 title_surf = font_title.render("Ping-Pong", False, "#415a77")
 title_rect = title_surf.get_rect(center = (300, 150))
-intro_surf = font_intro.render("Presiona cualquier tecla para empezar", True, "#e0e1dd")
+intro_surf = font_intro.render("Presiona espacio tecla para empezar", True, "#e0e1dd")
 intro_rect = intro_surf.get_rect(center = (300, 250))
 
 BALL_ACCELERATION = 5
@@ -69,6 +77,7 @@ class Ball():
       self.y_vel = -self.y_vel
       
   def bounce(self):
+    hit_sound.play()
     self.x_vel = -self.x_vel
 
 clock = pygame.time.Clock()
